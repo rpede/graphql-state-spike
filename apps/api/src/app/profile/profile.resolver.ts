@@ -1,10 +1,17 @@
 import { ParseIntPipe } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
+import { Profile } from '../graphql';
 import { ProfileRepository } from './profile.repository';
 
 @Resolver('Profile')
 export class ProfileResolver {
   constructor(private profileRepo: ProfileRepository) {}
+
+  @ResolveField()
+  fullName(@Parent() profile: Profile) {
+    const {firstName, lastName} = profile;
+    return `${firstName} ${lastName}`;
+  }
 
   @Query('profile')
   getProfile(@Args('id', ParseIntPipe) id: number) {

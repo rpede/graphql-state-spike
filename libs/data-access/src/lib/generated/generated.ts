@@ -50,6 +50,7 @@ export type Post = {
   author: Profile;
   title: Scalars['String'];
   body?: Maybe<Scalars['String']>;
+  preview?: Maybe<Scalars['String']>;
 };
 
 export type Profile = {
@@ -57,6 +58,7 @@ export type Profile = {
   id: Scalars['Int'];
   firstName: Scalars['String'];
   lastName: Scalars['String'];
+  fullName: Scalars['String'];
   posts: Array<Post>;
 };
 
@@ -86,21 +88,21 @@ export type QueryProfileArgs = {
 export type PostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, firstName: string, lastName: string } }> };
+export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: number, title: string, preview?: Maybe<string>, author: { __typename?: 'Profile', fullName: string } }> };
 
 export type PostQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, firstName: string, lastName: string } }> };
+export type PostQuery = { __typename?: 'Query', post?: Maybe<{ __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, fullName: string } }> };
 
 export type PostsByAuthorQueryVariables = Exact<{
   authorId: Scalars['Int'];
 }>;
 
 
-export type PostsByAuthorQuery = { __typename?: 'Query', postsByAuthor: Array<{ __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, firstName: string, lastName: string } }> };
+export type PostsByAuthorQuery = { __typename?: 'Query', postsByAuthor: Array<{ __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, fullName: string } }> };
 
 export type AddPostMutationVariables = Exact<{
   authorId: Scalars['Int'];
@@ -109,7 +111,7 @@ export type AddPostMutationVariables = Exact<{
 }>;
 
 
-export type AddPostMutation = { __typename?: 'Mutation', addPost?: Maybe<{ __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, firstName: string, lastName: string } }> };
+export type AddPostMutation = { __typename?: 'Mutation', addPost?: Maybe<{ __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, fullName: string } }> };
 
 export type UpdatePostMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -118,9 +120,18 @@ export type UpdatePostMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: Maybe<{ __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, firstName: string, lastName: string } }> };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: Maybe<{ __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, fullName: string } }> };
 
-export type PostWithAuthorFragment = { __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, firstName: string, lastName: string } };
+export type PostWithAuthorFragment = { __typename?: 'Post', id: number, title: string, body?: Maybe<string>, author: { __typename?: 'Profile', id: number, fullName: string } };
+
+export type PostWithPreviewFragment = { __typename?: 'Post', id: number, title: string, preview?: Maybe<string>, author: { __typename?: 'Profile', fullName: string } };
+
+export type ProfileWithPostsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type ProfileWithPostsQuery = { __typename?: 'Query', profile?: Maybe<{ __typename?: 'Profile', id: number, fullName: string, posts: Array<{ __typename?: 'Post', id: number, title: string }> }> };
 
 export type ProfileQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -145,18 +156,27 @@ export const PostWithAuthorFragmentDoc = gql`
   body
   author {
     id
-    firstName
-    lastName
+    fullName
+  }
+}
+    `;
+export const PostWithPreviewFragmentDoc = gql`
+    fragment postWithPreview on Post {
+  id
+  title
+  preview
+  author {
+    fullName
   }
 }
     `;
 export const PostsDocument = gql`
     query posts {
   posts {
-    ...postWithAuthor
+    ...postWithPreview
   }
 }
-    ${PostWithAuthorFragmentDoc}`;
+    ${PostWithPreviewFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -235,6 +255,29 @@ export const UpdatePostDocument = gql`
   })
   export class UpdatePostGQL extends Apollo.Mutation<UpdatePostMutation, UpdatePostMutationVariables> {
     document = UpdatePostDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const ProfileWithPostsDocument = gql`
+    query profileWithPosts($id: Int!) {
+  profile(id: $id) {
+    id
+    fullName
+    posts {
+      id
+      title
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class ProfileWithPostsGQL extends Apollo.Query<ProfileWithPostsQuery, ProfileWithPostsQueryVariables> {
+    document = ProfileWithPostsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

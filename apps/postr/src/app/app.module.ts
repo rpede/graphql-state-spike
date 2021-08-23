@@ -18,21 +18,42 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule, Routes } from '@angular/router';
 import { PostsComponent } from './posts/posts.component';
 import { ProfileComponent } from './profile/profile.component';
-import { GraphQLModule } from './graphql.module';
+import { GraphQLModule } from './graphql/graphql.module';
+import { PostComponent } from './post/post.component';
+import { IDResolver } from './id.resolver';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 const routes: Routes = [
   {
     component: PostsComponent,
-    path: 'posts'
+    path: 'posts',
+  },
+  {
+    component: PostComponent,
+    path: 'posts/:id',
+    resolve: { id: IDResolver },
   },
   {
     component: ProfileComponent,
-    path: 'profile'
+    path: 'profiles/:id',
+    resolve: { id: IDResolver },
+  },
+  {
+    component: MyProfileComponent,
+    path: 'my-profile',
+    data: { id: 0 },
   },
 ];
 
 @NgModule({
-  declarations: [AppComponent, NavigationComponent, PostsComponent, ProfileComponent],
+  declarations: [
+    AppComponent,
+    NavigationComponent,
+    PostsComponent,
+    ProfileComponent,
+    PostComponent,
+    MyProfileComponent,
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, { enableTracing: true }),

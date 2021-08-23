@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProfileWithPostsGQL } from '@graphql-state-spike/data-access';
+import { ProfileGQL } from '@graphql-state-spike/data-access';
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'postr-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  selector: 'postr-my-profile',
+  templateUrl: './my-profile.component.html',
+  styleUrls: ['./my-profile.component.scss']
 })
-export class ProfileComponent {
+export class MyProfileComponent  {
   readonly profile$ = this.route.data.pipe(
     switchMap(({ id }) =>
       this.profileQuery
@@ -19,6 +19,6 @@ export class ProfileComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private profileQuery: ProfileWithPostsGQL
+    private profileQuery: ProfileGQL
   ) {}
 }

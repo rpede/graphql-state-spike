@@ -1,0 +1,14 @@
+<mat-card *ngIf="post$ | async as post">
+  <mat-card-title-group>
+    <mat-card-title> {{ post.title }} </mat-card-title>
+    <mat-card-subtitle>
+      Author:
+      <a [routerLink]="['/profiles', post.author.id]">
+        {{ post.author.fullName }}
+      </a>
+    </mat-card-subtitle>
+  </mat-card-title-group>
+  <mat-card-content>
+    {{ post.body }}
+  </mat-card-content>
+</mat-card>

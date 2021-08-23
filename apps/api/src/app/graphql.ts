@@ -13,6 +13,7 @@ export interface Post {
     author: Profile;
     title: string;
     body?: Nullable<string>;
+    preview?: Nullable<string>;
 }
 
 export interface IQuery {
@@ -35,6 +36,7 @@ export interface Profile {
     id: number;
     firstName: string;
     lastName: string;
+    fullName: string;
     posts: Post[];
 }
 

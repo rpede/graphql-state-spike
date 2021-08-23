@@ -3,6 +3,7 @@ type Post {
   author: Profile!
   title: String!
   body: String
+  preview: String
 }
 
 type Query {

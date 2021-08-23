@@ -10,13 +10,15 @@ export class ProfileRepository extends BaseRepository<Profile> {
       id: 0,
       firstName: 'Joe',
       lastName: 'Doe',
-      posts: [],
+      fullName: null,
+      posts: null,
     });
     this.add({
       id: 1,
       firstName: 'Alice',
       lastName: 'Smith',
-      posts: [],
+      fullName: null,
+      posts: null
     });
   }
 }

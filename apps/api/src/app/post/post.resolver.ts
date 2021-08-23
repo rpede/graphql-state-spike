@@ -1,9 +1,24 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
+import { Post } from '../graphql';
 import { PostRepository } from './post.repository';
 
 @Resolver('Post')
 export class PostResolver {
-  constructor(private repository: PostRepository) { }
+  constructor(private repository: PostRepository) {}
+
+  @ResolveField()
+  preview(@Parent() post: Post) {
+    return (post.body || '')
+      .split('\n')
+      .filter((line) => line.trim().length > 0)[0];
+  }
 
   @Query('posts')
   getPosts() {
@@ -44,7 +59,7 @@ export class PostResolver {
     return this.repository.replace({
       ...this.repository.find(id),
       title,
-      body: body || ''
-    })
+      body: body || '',
+    });
   }
 }

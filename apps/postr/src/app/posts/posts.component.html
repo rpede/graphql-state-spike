@@ -1,7 +1,5 @@
-<div style="padding: 30px">
-  <mat-card>
-    <mat-card-title>Title</mat-card-title>
-    <mat-card-subtitle>Author</mat-card-subtitle>
-    <mat-card-content>Body</mat-card-content>
-  </mat-card>
-</div>
+<mat-card *ngFor="let post of (posts$ | async)" [routerLink]="['.', post.id]">
+  <mat-card-title>{{post.title}}</mat-card-title>
+  <mat-card-subtitle>{{post.author.fullName}}</mat-card-subtitle>
+  <mat-card-content>{{post.preview}}</mat-card-content>
+</mat-card>

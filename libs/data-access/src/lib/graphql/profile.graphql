@@ -1,3 +1,14 @@
+query profileWithPosts($id: Int!) {
+  profile(id: $id) {
+    id
+    fullName
+    posts {
+      id,
+      title
+    }
+  }
+}
+
 query profile($id: Int!) {
   profile(id: $id) {
     id

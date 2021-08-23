@@ -17,7 +17,8 @@
     "paths": {
       "@graphql-state-spike/api-interfaces": [
         "libs/api-interfaces/src/index.ts"
-      ]
+      ],
+      "@graphql-state-spike/data-access": ["libs/data-access/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

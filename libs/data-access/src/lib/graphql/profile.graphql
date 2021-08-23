@@ -1,0 +1,15 @@
+query profile($id: Int!) {
+  profile(id: $id) {
+    id
+    firstName
+    lastName
+  }
+}
+
+mutation updateProfile($id: Int!, $firstName: String!, $lastName: String!) {
+  updateProfile(id: $id, firstName: $firstName, lastName: $lastName) {
+    id
+    firstName
+    lastName
+  }
+}

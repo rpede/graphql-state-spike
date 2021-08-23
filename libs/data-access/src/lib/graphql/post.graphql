@@ -1,0 +1,40 @@
+query posts {
+  posts {
+    ...postWithAuthor
+  }
+}
+
+query post($id: Int!) {
+  post(id: $id) {
+    ...postWithAuthor
+  }
+}
+
+query postsByAuthor($authorId: Int!) {
+  postsByAuthor(authorId: $authorId) {
+    ...postWithAuthor
+  }
+}
+
+mutation addPost($authorId: Int!, $title: String!, $body: String) {
+  addPost(authorId: $authorId, title: $title, body: $body) {
+    ...postWithAuthor
+  }
+}
+
+mutation updatePost($id: Int!, $title: String, $body: String) {
+  updatePost(id: $id, title: $title, body: $body) {
+    ...postWithAuthor
+  }
+}
+
+fragment postWithAuthor on Post {
+  id
+  title
+  body
+  author {
+    id
+    firstName
+    lastName
+  }
+}

@@ -2,7 +2,11 @@
   <mat-spinner></mat-spinner>
 </ng-template>
 
-<form *ngIf="!loading; else spinner" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form
+  *ngIf="(loading$ | async) === false; else spinner"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+>
   <p>
     <mat-form-field appearance="fill">
       <mat-label>First name</mat-label>

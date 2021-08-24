@@ -2,8 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileGQL, UpdateProfileGQL } from '@graphql-state-spike/data-access';
-import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Subscription, Observable } from 'rxjs';
+import { switchMap, shareReplay, pluck, map, take } from 'rxjs/operators';
+
+type Profile = {
+  id: number;
+  firstName: string;
+  lastName: string;
+};
 
 @Component({
   selector: 'postr-my-profile',
@@ -15,28 +21,27 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
   });
-  private id?: number;
+
+  loading$?: Observable<boolean>;
+  profile$?: Observable<Profile>;
   private subscription?: Subscription;
-  loading = true;
 
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private profileQuery: ProfileGQL,
-    private updateProfile: UpdateProfileGQL
+    private updateProfileMutation: UpdateProfileGQL
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.route.data
-      .pipe(switchMap(({ id }) => this.profileQuery.watch({ id }).valueChanges))
-      .subscribe(({ data, loading }) => {
-        this.loading = loading;
-        if (data?.profile) {
-          const { id, firstName, lastName } = data.profile;
-          this.id = id;
-          this.form.setValue({ firstName, lastName });
-        }
-      });
+    const source$ = this.getProfile();
+
+    this.loading$ = source$.pipe(map((q) => q.loading));
+    this.profile$ = source$.pipe(map((q) => q.data?.profile as Profile));
+
+    this.subscription = this.profile$.subscribe(({ firstName, lastName }) => {
+      this.form.setValue({ firstName, lastName });
+    });
   }
 
   ngOnDestroy(): void {
@@ -48,10 +53,20 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       return;
     }
     const { firstName, lastName } = this.form.value;
-    return this.updateProfile.mutate({
-      id: this.id as number,
-      firstName,
-      lastName,
-    }).toPromise();
+    await this.updateProfile(firstName, lastName);
+  }
+
+  private async updateProfile(firstName: string, lastName: string) {
+    const { id } = (await this.profile$?.pipe(take(1)).toPromise()) as Profile;
+    return this.updateProfileMutation
+      .mutate({ id, firstName, lastName })
+      .toPromise();
+  }
+
+  private getProfile() {
+    return this.route.data.pipe(
+      switchMap(({ id }) => this.profileQuery.watch({ id }).valueChanges),
+      shareReplay(1)
+    );
   }
 }

@@ -1,1 +1,21 @@
-<p>my-profile works!</p>
+<ng-template #spinner>
+  <mat-spinner></mat-spinner>
+</ng-template>
+
+<form *ngIf="!loading; else spinner" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>First name</mat-label>
+      <input matInput formControlName="firstName" placeholder="Example: Joe" />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Last name</mat-label>
+      <input matInput formControlName="lastName" placeholder="Example: Doe" />
+    </mat-form-field>
+  </p>
+  <p>
+    <button mat-raised-button color="primary" type="submit">Update</button>
+  </p>
+</form>

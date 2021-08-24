@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostGQL } from '@graphql-state-spike/data-access';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'graphql-state-spike-post',
@@ -10,7 +10,6 @@ import { map, switchMap, tap } from 'rxjs/operators';
 })
 export class PostComponent {
   readonly post$ = this.route.data.pipe(
-    tap((data) => console.warn(data)),
     switchMap(({ id }) =>
       this.postQuery
         .watch({ id })

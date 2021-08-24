@@ -21,6 +21,8 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
 
 // Using component harnesses is an alternative.
 // See: https://material.angular.io/guide/using-component-harnesses
@@ -32,19 +34,21 @@ describe('MyProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      declarations: [MyProfileComponent],
       imports: [
         ApolloTestingModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
+        LayoutModule,
         MatProgressSpinnerModule,
         MatFormFieldModule,
         MatInputModule,
       ],
       providers: [
-        { provide: ActivatedRoute, useValue: { data: of({ id: profileId }) } },
         { provide: ComponentFixtureAutoDetect, useValue: true },
+        { provide: MATERIAL_SANITY_CHECKS, useValue: false },
+        { provide: ActivatedRoute, useValue: { data: of({ id: profileId }) } },
       ],
-      declarations: [MyProfileComponent],
     }).compileComponents();
 
     controller = TestBed.inject(ApolloTestingController);

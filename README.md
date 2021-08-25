@@ -19,6 +19,36 @@ Here is how the monorepo is organized.
 - **apps/postr** is the frontend build using Angular, Material and Apollo.
 - **libs/data-access** is client side data access layer. Code is generated from GraphQL queries/mutations.
 
+## Notes about testing
+
+SUT is shorthand for system under test.
+
+### Dependency issue
+
+I initially had some trouble getting dependency injection to work Angular and Jest.
+
+For dependencies using `@Injectable({ providedIn: 'root' })` I was getting following error:
+
+`This constructor is not compatible with Angular Dependency Injection because its dependency at index 0 of the parameter list is invalid.`
+
+To solve the issue I had to update *tsconfig.spec.json* with the following:
+```json
+{
+  ...
+  "compilerOptions": {
+    ...
+    "allowJs": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+  },
+  ...
+}
+```
+
+### Component testing
+
+I haven't explored using [Angular Material's component harnesses](https://material.angular.io/guide/using-component-harnesses) yet. But it looks like an good alternative to the `element(selector)` helper function I've made for [my-profile.component.spec.ts](apps/postr/src/app/my-profile/my-profile.component.spec.ts).
+
 ## Quick Start
 
 Run `npm install` to install dependencies.

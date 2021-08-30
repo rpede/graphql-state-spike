@@ -26,11 +26,16 @@ import { GraphQLModule } from './graphql/graphql.module';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { IDResolver } from './id.resolver';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { PostAddComponent } from './post-add/post-add.component';
 
 const routes: Routes = [
   {
     component: PostListComponent,
     path: 'posts',
+  },
+  {
+    component: PostAddComponent,
+    path: 'posts/add',
   },
   {
     component: PostDetailComponent,
@@ -57,6 +62,7 @@ const routes: Routes = [
     ProfileComponent,
     PostDetailComponent,
     MyProfileComponent,
+    PostAddComponent,
   ],
   imports: [
     BrowserModule,

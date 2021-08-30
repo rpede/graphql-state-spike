@@ -1,0 +1,29 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input
+        id="titleInput"
+        matInput
+        formControlName="title"
+        type="text"
+        required
+      />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="fill">
+      <mat-label>Body</mat-label>
+      <textarea id="bodyInput" matInput formControlName="body"></textarea>
+    </mat-form-field>
+  </p>
+  <button
+    id="submit"
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="form.invalid"
+  >
+    Add
+  </button>
+</form>

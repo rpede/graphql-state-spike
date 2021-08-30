@@ -3,11 +3,11 @@ import { PostsGQL } from '@graphql-state-spike/data-access';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'postr-posts',
-  templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss'],
+  selector: 'postr-post-list',
+  templateUrl: './post-list.component.html',
+  styleUrls: ['./post-list.component.scss'],
 })
-export class PostsComponent {
+export class PostListComponent {
   readonly posts$ = this.postsQuery
     .watch()
     .valueChanges.pipe(map((result) => result.data.posts));

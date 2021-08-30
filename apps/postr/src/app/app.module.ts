@@ -20,20 +20,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule, Routes } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { PostsComponent } from './posts/posts.component';
+import { PostListComponent } from './post-list/post-list.component';
 import { ProfileComponent } from './profile/profile.component';
 import { GraphQLModule } from './graphql/graphql.module';
-import { PostComponent } from './post/post.component';
+import { PostDetailComponent } from './post-detail/post-detail.component';
 import { IDResolver } from './id.resolver';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 
 const routes: Routes = [
   {
-    component: PostsComponent,
+    component: PostListComponent,
     path: 'posts',
   },
   {
-    component: PostComponent,
+    component: PostDetailComponent,
     path: 'posts/:id',
     resolve: { id: IDResolver },
   },
@@ -53,9 +53,9 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     NavigationComponent,
-    PostsComponent,
+    PostListComponent,
     ProfileComponent,
-    PostComponent,
+    PostDetailComponent,
     MyProfileComponent,
   ],
   imports: [

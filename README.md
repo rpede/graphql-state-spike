@@ -68,6 +68,8 @@ Start **frontend** with `npx nx serve postr` then access at http://localhost:420
 
 ## Resources
 
+[Nx Apollo Angular Example](https://github.com/nrwl/nx-apollo-angular-example)
+
 ### Nx
 [Nx Documentation](https://nx.dev/angular)
 

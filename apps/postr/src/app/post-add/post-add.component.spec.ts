@@ -1,34 +1,36 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { PostAddComponent } from './post-add.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MatFormFieldModule,
-} from '@angular/material/form-field';
-import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
+import { FormTestingModule } from '../__tests__/form-testing.module';
+import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
+import { createComponentFixture, setInputValue } from '../__tests__/component-test.helpers';
+import { AddPostDocument } from '@graphql-state-spike/data-access';
 
 describe('PostAddComponent', () => {
   let component: PostAddComponent;
   let fixture: ComponentFixture<PostAddComponent>;
+  let controller: ApolloTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        ApolloTestingModule,
         RouterTestingModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        NoopAnimationsModule
+        FormTestingModule,
       ],
       providers: [
-        { provide: MATERIAL_SANITY_CHECKS, useValue: false },
+        { provide: ComponentFixtureAutoDetect, useValue: true },
       ],
       declarations: [PostAddComponent],
     }).compileComponents();
+
+    controller = TestBed.inject(ApolloTestingController);
   });
+
+  afterEach(() => {
+    controller.verify();
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PostAddComponent);
@@ -39,4 +41,18 @@ describe('PostAddComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('submitting the form', () => {
+    it('should add a now post', () => {
+      const { element } = createComponentFixture(PostAddComponent);
+
+      setInputValue(element('#titleInput'), 'Test title');
+      setInputValue(element('#bodyInput'), 'Test body');
+      element('button[type="submit"]').click();
+
+      const op = controller.expectOne(AddPostDocument);
+      expect(op.operation.variables).toHaveProperty('title', 'Test title');
+      expect(op.operation.variables).toHaveProperty('body', 'Test body');
+    });
+  })
 });

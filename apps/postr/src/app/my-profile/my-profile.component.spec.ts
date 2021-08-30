@@ -23,6 +23,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
+import { FormTestingModule } from '../__tests__/form-testing.module';
+import { createComponentFixture } from '../__tests__/component-test.helpers';
 
 // Using component harnesses is an alternative.
 // See: https://material.angular.io/guide/using-component-harnesses
@@ -37,16 +39,11 @@ describe('MyProfileComponent', () => {
       declarations: [MyProfileComponent],
       imports: [
         ApolloTestingModule,
-        ReactiveFormsModule,
-        NoopAnimationsModule,
         LayoutModule,
-        MatProgressSpinnerModule,
-        MatFormFieldModule,
-        MatInputModule,
+        FormTestingModule,
       ],
       providers: [
         { provide: ComponentFixtureAutoDetect, useValue: true },
-        { provide: MATERIAL_SANITY_CHECKS, useValue: false },
         { provide: ActivatedRoute, useValue: { data: of({ id: profileId }) } },
       ],
     }).compileComponents();
@@ -91,12 +88,7 @@ describe('MyProfileComponent', () => {
   });
 
   function createSUT() {
-    const fixture = TestBed.createComponent(MyProfileComponent);
-    const component = fixture.componentInstance;
-    const element = (selector: string) =>
-      fixture.nativeElement.querySelector(selector);
-
-    return { fixture, component, element };
+    return createComponentFixture(MyProfileComponent);
   }
 
   function mockProfileQuery(firstName: string, lastName: string) {

@@ -5,7 +5,7 @@ import { PostAddComponent } from './post-add.component';
 import { FormTestingModule } from '../__tests__/form-testing.module';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { createComponentFixture, setInputValue } from '../__tests__/component-test.helpers';
-import { AddPostDocument } from '@graphql-state-spike/data-access';
+import { AddPostDocument } from '@postr/data-access';
 
 describe('PostAddComponent', () => {
   let component: PostAddComponent;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PostsGQL } from '@graphql-state-spike/data-access';
+import { PostsGQL } from '@postr/data-access';
 import { map } from 'rxjs/operators';
 
 @Component({

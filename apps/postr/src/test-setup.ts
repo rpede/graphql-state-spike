@@ -1,2 +1,2 @@
 import 'jest-preset-angular/setup-jest';
-import '@graphql-state-spike/data-access';
+import '@postr/data-access';

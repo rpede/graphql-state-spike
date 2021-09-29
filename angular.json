@@ -78,7 +78,7 @@
       "projectType": "library",
       "root": "libs/data-access",
       "sourceRoot": "libs/data-access/src",
-      "prefix": "graphql-state-spike",
+      "prefix": "postr",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
@@ -113,7 +113,7 @@
       "projectType": "application",
       "root": "apps/postr",
       "sourceRoot": "apps/postr/src",
-      "prefix": "graphql-state-spike",
+      "prefix": "postr",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

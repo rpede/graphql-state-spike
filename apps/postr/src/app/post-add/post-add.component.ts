@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AddPostGQL } from '@graphql-state-spike/data-access';
+import { AddPostGQL } from '@postr/data-access';
 import { map } from 'rxjs/operators';
 
 const authorId = 1;
 
 @Component({
-  selector: 'graphql-state-spike-post-add',
+  selector: 'postr-post-add',
   templateUrl: './post-add.component.html',
   styleUrls: ['./post-add.component.scss'],
 })

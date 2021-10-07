@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PostComponent } from './post.component';
+import { PostDetailComponent } from './post-detail.component';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 describe('PostComponent', () => {
-  let component: PostComponent;
-  let fixture: ComponentFixture<PostComponent>;
+  let component: PostDetailComponent;
+  let fixture: ComponentFixture<PostDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,12 +15,12 @@ describe('PostComponent', () => {
       providers: [
         { provide: ActivatedRoute, useValue: { data: of({ id: 1 }) } },
       ],
-      declarations: [PostComponent],
+      declarations: [PostDetailComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PostComponent);
+    fixture = TestBed.createComponent(PostDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

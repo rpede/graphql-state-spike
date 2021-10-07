@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PostGQL } from '@graphql-state-spike/data-access';
+import { PostGQL } from '@postr/data-access';
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'graphql-state-spike-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss'],
+  selector: 'postr-post-list',
+  templateUrl: './post-detail.component.html',
+  styleUrls: ['./post-detail.component.scss'],
 })
-export class PostComponent {
+export class PostDetailComponent {
   readonly post$ = this.route.data.pipe(
     switchMap(({ id }) =>
       this.postQuery

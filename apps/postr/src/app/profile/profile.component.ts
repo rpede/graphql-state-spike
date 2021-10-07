@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProfileWithPostsGQL } from '@graphql-state-spike/data-access';
+import { ProfileWithPostsGQL } from '@postr/data-access';
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({

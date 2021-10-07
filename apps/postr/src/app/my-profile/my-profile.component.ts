@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ProfileGQL, UpdateProfileGQL } from '@graphql-state-spike/data-access';
+import { ProfileGQL, UpdateProfileGQL } from '@postr/data-access';
 import { Subscription, Observable } from 'rxjs';
 import { switchMap, shareReplay, map, take } from 'rxjs/operators';
 

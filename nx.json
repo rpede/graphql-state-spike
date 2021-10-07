@@ -1,5 +1,5 @@
 {
-  "npmScope": "graphql-state-spike",
+  "npmScope": "postr",
   "affected": {
     "defaultBase": "master"
   },

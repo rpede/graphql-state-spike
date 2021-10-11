@@ -27,6 +27,7 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
 import { IDResolver } from './id.resolver';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { PostAddComponent } from './post-add/post-add.component';
+import { UserIDResolver } from './user-id.resolver';
 
 const routes: Routes = [
   {
@@ -36,6 +37,7 @@ const routes: Routes = [
   {
     component: PostAddComponent,
     path: 'posts/add',
+    resolve: { authorId: UserIDResolver },
   },
   {
     component: PostDetailComponent,
@@ -50,7 +52,7 @@ const routes: Routes = [
   {
     component: MyProfileComponent,
     path: 'my-profile',
-    data: { id: 0 },
+    resolve: { id: UserIDResolver },
   },
 ];
 

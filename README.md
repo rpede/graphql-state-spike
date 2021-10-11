@@ -19,6 +19,18 @@ Here is how the monorepo is organized.
 - **apps/postr** is the frontend build using Angular, Material and Apollo.
 - **libs/data-access** is client side data access layer. Code is generated from GraphQL queries/mutations.
 
+## Quick Start
+
+Run `npm install` to install dependencies.
+
+Generate code from GraphQL schema with:
+```
+npx ng run api:generate
+npx ng run data-access:generate
+```
+
+Run `npx nx test postr` to execute tests for frontend, add `--watchAll` to re-execute when files change.
+
 ## Notes about testing
 
 SUT is shorthand for system under test.
@@ -48,18 +60,6 @@ To solve the issue I had to update *tsconfig.spec.json* with the following:
 ### Component testing
 
 I haven't explored using [Angular Material's component harnesses](https://material.angular.io/guide/using-component-harnesses) yet. But it looks like an good alternative to the `element(selector)` helper function I've made for [my-profile.component.spec.ts](apps/postr/src/app/my-profile/my-profile.component.spec.ts).
-
-## Quick Start
-
-Run `npm install` to install dependencies.
-
-Generate code from GraphQL schema with:
-```
-npx ng run api:generate
-npx ng run data-access:generate
-```
-
-Run `npx nx test postr` to execute tests for frontend, add `--watchAll` to re-execute when files change.
 
 ### Running the application
 Start **backend** with `npx nx serve api` then access at http://localhost:3333/graphql.

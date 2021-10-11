@@ -4,7 +4,7 @@ import { PostGQL } from '@postr/data-access';
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'postr-post-list',
+  selector: 'postr-post-detail',
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.scss'],
 })

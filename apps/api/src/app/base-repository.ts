@@ -1,26 +1,28 @@
+import { Inject } from '@nestjs/common';
+import { PrismaService } from './prisma.service';
+
 export abstract class BaseRepository<T extends {id: number}> {
-  protected entities: T[] = [];
+  constructor(@Inject(PrismaService.name) protected readonly prisma: PrismaService) { }
 
-  find(id: number) {
-    return this.entities.find(entity => entity.id === id);
+  protected abstract get delegate();
+
+  find(id: number): Promise<T> {
+    return this.delegate.findUnique({ where: { id } });
   }
 
-  all() {
-    return [...this.entities];
+  all(): Promise<T[]> {
+    return this.delegate.findMany();
   }
 
-  count() {
-    return this.entities.length;
+  count(): Promise<number> {
+    return this.prisma.post.count();
   }
 
-  add(entity: T) {
-    this.entities.push(entity)
-    return entity;
+  add(data: Partial<T>): Promise<T> {
+    return this.delegate.create({ data });
   }
 
-  replace(entity: T) {
-    const index = this.entities.findIndex(oldEntity => oldEntity.id === entity.id);
-    this.entities[index] = entity;
-    return entity;
+  replace(data: Partial<T>): Promise<T> {
+    return this.delegate.update({ where: { id: data.id }, data });
   }
 }

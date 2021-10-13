@@ -42,9 +42,7 @@ export class PostResolver {
     @Args('body') body?: string
   ) {
     return this.repository.add({
-      id: this.repository.count(),
       authorId,
-      author: null,
       title: title,
       body: body || '',
     });
@@ -57,7 +55,7 @@ export class PostResolver {
     @Args('body') body?: string
   ) {
     return this.repository.replace({
-      ...this.repository.find(id),
+      id,
       title,
       body: body || '',
     });

@@ -8,6 +8,7 @@ import { PostResolver } from './post/post.resolver';
 import { PostAuthorResolver } from './post/post-author.resolver';
 import { ProfilePostResolver } from './profile/profile-posts.resolver';
 import { PostRepository } from './post/post.repository';
+import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [
@@ -24,7 +25,11 @@ import { PostRepository } from './post/post.repository';
     PostAuthorResolver,
     PostResolver,
     PostRepository,
-    ProfilePostResolver
+    ProfilePostResolver,
+    {
+      provide: PrismaService.name,
+      useClass: PrismaService
+    }
   ],
 })
 export class AppModule {}

@@ -26,9 +26,14 @@
     "workspace-generator": "nx workspace-generator",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "generate-typings": "ts-node apps/api/src/generate-typings"
+    "generate-typings": "ts-node apps/api/src/generate-typings",
+    "seed": "npx prisma db seed"
   },
   "private": true,
+  "prisma": {
+    "schema": "libs/models/src/prisma/schema.prisma",
+    "seed": "ts-node libs/models/src/prisma/seed.ts"
+  },
   "dependencies": {
     "@angular/animations": "^12.1.0",
     "@angular/cdk": "^12.2.2",
@@ -89,6 +94,7 @@
     "jest": "27.0.3",
     "jest-preset-angular": "9.0.4",
     "prettier": "^2.3.1",
+    "prisma": "^3.2.1",
     "ts-jest": "27.0.3",
     "ts-morph": "^11.0.3",
     "ts-node": "~9.1.1",

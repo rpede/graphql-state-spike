@@ -109,6 +109,62 @@
         }
       }
     },
+    "models": {
+      "root": "libs/models",
+      "sourceRoot": "libs/models/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/models/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/models"],
+          "options": {
+            "jestConfig": "libs/models/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "migrate-dev": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npx prisma migrate dev --schema ./src/prisma/schema.prisma",
+            "cwd": "libs/models"
+          }
+        },
+        "migrate-reset": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npx prisma migrate reset --schema ./src/prisma/schema.prisma",
+            "cwd": "libs/models"
+          }
+        },
+        "migrate-deploy": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npx prisma migrate deploy --schema ./src/prisma/schema.prisma",
+            "cwd": "libs/models"
+          }
+        },
+        "migrate-status": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npx prisma migrate status --schema ./src/prisma/schema.prisma",
+            "cwd": "libs/models"
+          }
+        },
+        "generate": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "npx prisma generate --schema ./src/prisma/schema.prisma",
+            "cwd": "libs/models"
+          }
+        }
+      }
+    },
     "postr": {
       "projectType": "application",
       "root": "apps/postr",

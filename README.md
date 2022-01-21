@@ -21,16 +21,9 @@ Here is how the monorepo is organized.
 
 ## Quick Start
 
-Requires node 14.
-Using nvm run:
-```
-nvm install 14
-nvm use 14
-```
-
 Install dependencies
 ```
-npm install
+npm install --legacy-peer-deps 
 ```
 
 Generate code from GraphQL schema and Prisma client with:

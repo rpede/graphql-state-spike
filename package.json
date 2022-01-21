@@ -7,11 +7,11 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
     "nx": "nx",
     "start": "nx run-many --target=serve --all --parallel",
-    "build": "ng build",
+    "build": "nx run-many --target=build --all --parallel",
     "test": "nx run-many --target=test --all --parallel",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
-    "generate": "nx run-many --target=generate --all --parallel",
+    "generate": "nx run-many --target=generate --all --parallel && npx prisma generate",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
@@ -28,12 +28,13 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "generate-typings": "ts-node apps/api/src/generate-typings",
-    "seed": "npx prisma db seed"
+    "seed": "npx prisma db seed",
+    "migrate": "npx prisma migrate dev",
+    "setup:db": "npm run seed && npm run migrate"
   },
   "private": true,
   "prisma": {
-    "schema": "libs/models/src/prisma/schema.prisma",
-    "seed": "ts-node libs/models/src/prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@angular/animations": "^12.1.0",
@@ -52,6 +53,7 @@
     "@nestjs/graphql": "^8.0.2",
     "@nestjs/platform-express": "^7.0.0",
     "@nrwl/angular": "12.7.2",
+    "@prisma/client": "^3.8.1",
     "apollo-angular": "^2.6.0",
     "apollo-server-express": "^2.25.2",
     "graphql": "^15.5.1",
@@ -95,7 +97,7 @@
     "jest": "27.0.3",
     "jest-preset-angular": "9.0.4",
     "prettier": "^2.3.1",
-    "prisma": "^3.2.1",
+    "prisma": "^3.8.1",
     "ts-jest": "27.0.3",
     "ts-morph": "^11.0.3",
     "ts-node": "~9.1.1",

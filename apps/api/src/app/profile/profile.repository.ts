@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Profile } from '@postr/models';
+import { Profile } from '@prisma/client';
 import { BaseRepository } from '../base-repository';
 
 @Injectable()

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileGQL, UpdateProfileGQL } from '@postr/data-access';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, firstValueFrom } from 'rxjs';
 import { switchMap, shareReplay, map, take } from 'rxjs/operators';
 
 type Profile = {
@@ -58,9 +58,9 @@ export class MyProfileComponent implements OnInit, OnDestroy {
 
   private async updateProfile(firstName: string, lastName: string) {
     const { id } = (await this.profile$?.pipe(take(1)).toPromise()) as Profile;
-    return this.updateProfileMutation
-      .mutate({ id, firstName, lastName })
-      .toPromise();
+    return firstValueFrom(
+      this.updateProfileMutation.mutate({ id, firstName, lastName })
+    );
   }
 
   private getProfile() {

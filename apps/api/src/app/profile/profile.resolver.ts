@@ -19,13 +19,14 @@ export class ProfileResolver {
   }
 
   @Mutation('updateProfile')
-  updateProfile(
+  async updateProfile(
     @Args('id', ParseIntPipe) id: number,
     @Args('firstName') firstName: string,
     @Args('lastName') lastName: string
   ) {
+    const profile = await this.profileRepo.find(id);
     return this.profileRepo.replace({
-      ...this.profileRepo.find(id),
+      ...profile,
       firstName,
       lastName,
     });

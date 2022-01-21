@@ -21,13 +21,29 @@ Here is how the monorepo is organized.
 
 ## Quick Start
 
-Run `npm install` to install dependencies.
+Requires node 14.
+Using nvm run:
+```
+nvm install 14
+nvm use 14
+```
 
-Generate code from GraphQL schema with:
+Install dependencies
 ```
-npx ng run api:generate
-npx ng run data-access:generate
+npm install
 ```
+
+Generate code from GraphQL schema and Prisma client with:
+```
+npm run generate
+```
+
+Setup database
+```
+npm run setup:db
+```
+
+`npm start` to serve and `npm test` to run tests.
 
 Run `npx nx test postr` to execute tests for frontend, add `--watchAll` to re-execute when files change.
 

@@ -22,8 +22,8 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     lastName: ['', Validators.required],
   });
 
-  loading$?: Observable<boolean>;
-  profile$?: Observable<Profile>;
+  loading$!: Observable<boolean>;
+  profile$!: Observable<Profile>;
   private subscription?: Subscription;
 
   constructor(
@@ -57,7 +57,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   }
 
   private async updateProfile(firstName: string, lastName: string) {
-    const { id } = (await this.profile$?.pipe(take(1)).toPromise()) as Profile;
+    const { id } = await firstValueFrom(this.profile$);
     return firstValueFrom(
       this.updateProfileMutation.mutate({ id, firstName, lastName })
     );

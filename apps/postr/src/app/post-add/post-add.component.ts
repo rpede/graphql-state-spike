@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AddPostGQL } from '@postr/data-access';
+import { firstValueFrom } from 'rxjs';
 import { map, pluck, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -24,13 +25,13 @@ export class PostAddComponent {
 
   async onSubmit() {
     const { title, body } = this.form.value;
-    const newPost = await this.route.data.pipe(
+    const newPost = await firstValueFrom(this.route.data.pipe(
       pluck('authorId'),
       switchMap((authorId) =>
         this.addPostMutation.mutate({ title, body, authorId })
       ),
       map((response) => response.data?.addPost)
-    ).toPromise();
-    this.router.navigate(['/posts', newPost?.id]);
+    ));
+    this.router.navigate(['posts', newPost?.id]);
   }
 }

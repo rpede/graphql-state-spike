@@ -4,8 +4,6 @@
 
 This is a spike project made to try out working with GraphQL in a monorepo.
 
-It uses in-memory arrays to store data instead of a database, so data is reset on each restart of the backend.
-
 I needed two entities with a relationship between. We have **Post** and **Profile**.
 A post has an author pointing to a profile, and a profile has many posts.
 

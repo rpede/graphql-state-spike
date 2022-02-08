@@ -1,60 +1,72 @@
 import {
   Args,
+  Int,
   Mutation,
   Parent,
   Query,
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { Post } from '../graphql';
+import { Post } from './post.model';
 import { PostRepository } from './post.repository';
+import { ParseIntPipe } from '@nestjs/common';
+import { ProfileRepository } from '../profile/profile.repository';
+import { Profile } from '../profile/profile.model';
 
-@Resolver('Post')
+@Resolver((of) => Post)
 export class PostResolver {
-  constructor(private repository: PostRepository) {}
+  constructor(
+    private postRepo: PostRepository,
+    private profileRepo: ProfileRepository
+  ) {}
 
-  @ResolveField()
+  @ResolveField((returns) => String, { nullable: true })
   preview(@Parent() post: Post) {
     return (post.body || '')
       .split('\n')
       .filter((line) => line.trim().length > 0)[0];
   }
 
-  @Query('posts')
-  getPosts() {
-    return this.repository.all();
+  @ResolveField((returns) => Profile)
+  author(@Parent() post: Post & { authorId: number }) {
+    return this.profileRepo.find(post.authorId);
   }
 
-  @Query('post')
-  getPost(@Args('id') id: number) {
-    return this.repository.find(id);
+  @Query((returns) => [Post])
+  posts() {
+    return this.postRepo.all();
   }
 
-  @Query('postsByAuthor')
-  getPostByAuthor(@Args('authorId') authorId: number) {
-    return this.repository.findByAuthor(authorId);
+  @Query((returns) => Post)
+  post(@Args('id', { type: () => Int }) id: number) {
+    return this.postRepo.find(id);
   }
 
-  @Mutation('addPost')
+  @Query((returns) => [Post])
+  postsByAuthor(@Args('authorId', { type: () => Int }) authorId: number) {
+    return this.postRepo.findByAuthor(authorId);
+  }
+
+  @Mutation((returns) => Post)
   addPost(
-    @Args('authorId') authorId: number,
+    @Args('authorId', { type: () => Int }, ParseIntPipe) authorId: number,
     @Args('title') title: string,
-    @Args('body') body?: string
+    @Args('body', { nullable: true }) body?: string
   ) {
-    return this.repository.add({
+    return this.postRepo.add({
       authorId,
       title: title,
       body: body || '',
     });
   }
 
-  @Mutation('updatePost')
+  @Mutation((returns) => Post)
   updatePost(
-    @Args('id') id: number,
+    @Args('id', { type: () => Int }) id: number,
     @Args('title') title: string,
-    @Args('body') body?: string
+    @Args('body', { nullable: true }) body?: string
   ) {
-    return this.repository.replace({
+    return this.postRepo.replace({
       id,
       title,
       body: body || '',

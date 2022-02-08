@@ -17,9 +17,9 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addPost?: Maybe<Post>;
-  updatePost?: Maybe<Post>;
-  updateProfile?: Maybe<Profile>;
+  addPost: Post;
+  updatePost: Post;
+  updateProfile: Profile;
 };
 
 
@@ -33,7 +33,7 @@ export type MutationAddPostArgs = {
 export type MutationUpdatePostArgs = {
   body?: InputMaybe<Scalars['String']>;
   id: Scalars['Int'];
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
 };
 
 
@@ -63,10 +63,10 @@ export type Profile = {
 
 export type Query = {
   __typename?: 'Query';
-  post?: Maybe<Post>;
+  post: Post;
   posts: Array<Post>;
   postsByAuthor: Array<Post>;
-  profile?: Maybe<Profile>;
+  profile: Profile;
 };
 
 
@@ -94,7 +94,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', id: number, title: string, body?: string | null | undefined, author: { __typename?: 'Profile', id: number, fullName: string } } | null | undefined };
+export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', id: number, title: string, body?: string | null | undefined, author: { __typename?: 'Profile', id: number, fullName: string } } };
 
 export type PostsByAuthorQueryVariables = Exact<{
   authorId: Scalars['Int'];
@@ -110,16 +110,16 @@ export type AddPostMutationVariables = Exact<{
 }>;
 
 
-export type AddPostMutation = { __typename?: 'Mutation', addPost?: { __typename?: 'Post', id: number, title: string, body?: string | null | undefined, author: { __typename?: 'Profile', id: number, fullName: string } } | null | undefined };
+export type AddPostMutation = { __typename?: 'Mutation', addPost: { __typename?: 'Post', id: number, title: string, body?: string | null | undefined, author: { __typename?: 'Profile', id: number, fullName: string } } };
 
 export type UpdatePostMutationVariables = Exact<{
   id: Scalars['Int'];
-  title?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
   body?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type UpdatePostMutation = { __typename?: 'Mutation', updatePost?: { __typename?: 'Post', id: number, title: string, body?: string | null | undefined, author: { __typename?: 'Profile', id: number, fullName: string } } | null | undefined };
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __typename?: 'Post', id: number, title: string, body?: string | null | undefined, author: { __typename?: 'Profile', id: number, fullName: string } } };
 
 export type PostWithAuthorFragment = { __typename?: 'Post', id: number, title: string, body?: string | null | undefined, author: { __typename?: 'Profile', id: number, fullName: string } };
 
@@ -130,14 +130,14 @@ export type ProfileWithPostsQueryVariables = Exact<{
 }>;
 
 
-export type ProfileWithPostsQuery = { __typename?: 'Query', profile?: { __typename?: 'Profile', id: number, fullName: string, posts: Array<{ __typename?: 'Post', id: number, title: string }> } | null | undefined };
+export type ProfileWithPostsQuery = { __typename?: 'Query', profile: { __typename?: 'Profile', id: number, fullName: string, posts: Array<{ __typename?: 'Post', id: number, title: string }> } };
 
 export type ProfileQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type ProfileQuery = { __typename?: 'Query', profile?: { __typename?: 'Profile', id: number, firstName: string, lastName: string } | null | undefined };
+export type ProfileQuery = { __typename?: 'Query', profile: { __typename?: 'Profile', id: number, firstName: string, lastName: string } };
 
 export type UpdateProfileMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -146,7 +146,7 @@ export type UpdateProfileMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProfileMutation = { __typename?: 'Mutation', updateProfile?: { __typename?: 'Profile', id: number, firstName: string, lastName: string } | null | undefined };
+export type UpdateProfileMutation = { __typename?: 'Mutation', updateProfile: { __typename?: 'Profile', id: number, firstName: string, lastName: string } };
 
 export const PostWithAuthorFragmentDoc = gql`
     fragment postWithAuthor on Post {
@@ -242,7 +242,7 @@ export const AddPostDocument = gql`
     }
   }
 export const UpdatePostDocument = gql`
-    mutation updatePost($id: Int!, $title: String, $body: String) {
+    mutation updatePost($id: Int!, $title: String!, $body: String) {
   updatePost(id: $id, title: $title, body: $body) {
     ...postWithAuthor
   }

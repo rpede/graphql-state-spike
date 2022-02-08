@@ -22,7 +22,7 @@ mutation addPost($authorId: Int!, $title: String!, $body: String) {
   }
 }
 
-mutation updatePost($id: Int!, $title: String, $body: String) {
+mutation updatePost($id: Int!, $title: String!, $body: String) {
   updatePost(id: $id, title: $title, body: $body) {
     ...postWithAuthor
   }

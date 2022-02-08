@@ -1,26 +1,44 @@
 import { ParseIntPipe } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
-import { Profile } from '../graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+  Int,
+} from '@nestjs/graphql';
+import { Post } from '../post/post.model';
+import { Profile } from './profile.model';
 import { ProfileRepository } from './profile.repository';
+import { PostRepository } from '../post/post.repository';
 
-@Resolver('Profile')
+@Resolver((of) => Profile)
 export class ProfileResolver {
-  constructor(private profileRepo: ProfileRepository) {}
+  constructor(
+    private profileRepo: ProfileRepository,
+    private postRepo: PostRepository
+  ) {}
 
-  @ResolveField()
+  @ResolveField((returns) => String)
   fullName(@Parent() profile: Profile) {
-    const {firstName, lastName} = profile;
+    const { firstName, lastName } = profile;
     return `${firstName} ${lastName}`;
   }
 
-  @Query('profile')
-  getProfile(@Args('id', ParseIntPipe) id: number) {
+  @ResolveField((returns) => [Post])
+  posts(@Parent() profile: Profile) {
+    return this.postRepo.findByAuthor(profile.id);
+  }
+
+  @Query((returns) => Profile)
+  profile(@Args({ name: 'id', type: () => Int }, ParseIntPipe) id: number) {
     return this.profileRepo.find(id);
   }
 
-  @Mutation('updateProfile')
+  @Mutation((returns) => Profile)
   async updateProfile(
-    @Args('id', ParseIntPipe) id: number,
+    @Args('id', { type: () => Int }, ParseIntPipe) id: number,
     @Args('firstName') firstName: string,
     @Args('lastName') lastName: string
   ) {

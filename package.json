@@ -30,7 +30,8 @@
     "generate-typings": "ts-node apps/api/src/generate-typings",
     "seed": "npx prisma db seed",
     "migrate": "npx prisma migrate dev",
-    "setup:db": "npm run migrate && npm run seed"
+    "setup:db": "npm run migrate && npm run seed",
+    "firstrun": "npm install --legacy-peer-deps && npm run generate && npm run setup:db && npm run start"
   },
   "private": true,
   "prisma": {

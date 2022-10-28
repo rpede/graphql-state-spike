@@ -31,7 +31,7 @@
     "seed": "npx prisma db seed",
     "migrate": "npx prisma migrate dev",
     "setup:db": "npm run migrate && npm run seed",
-    "firstrun": "npm install --legacy-peer-deps && npm run generate && npm run setup:db && npm run start"
+    "firstrun": "npm ci && npm run generate && npm run setup:db && npm run start"
   },
   "private": true,
   "prisma": {
@@ -55,7 +55,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nrwl/angular": "13.4.6",
     "@prisma/client": "^3.8.1",
-    "apollo-angular": "^2.6.0",
+    "apollo-angular": "^3.0.1",
     "apollo-server-express": "^2.25.2",
     "graphql": "^15.5.1",
     "graphql-tools": "^8.1.0",
